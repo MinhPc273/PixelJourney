@@ -1,4 +1,4 @@
-using JunEngine;
+﻿using JunEngine;
 using UnityEngine;
 
 public class PlayerController : MMSingleton<PlayerController>
@@ -37,60 +37,27 @@ public class PlayerController : MMSingleton<PlayerController>
 
     void Update()
     {
-        if(InputManager.Current._InputType == InputType.Keyboard)
+        //get input
+        if (InputManager.Current._InputType == InputType.Keyboard)
         {
-            _horizontal = Input.GetAxis("Horizontal");
-            if(_horizontal > 0)
-            {
-                _horizontal = 1;
-            }
-            else if(_horizontal < 0)
-            {
-                _horizontal = -1;
-            }
-            else
-            {
-                _horizontal = 0;
-            }
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded() && _canJump)
-            {
-                _rb.AddForce(Vector2.up * _force, ForceMode2D.Impulse);
-                _canJump = false;
-            }
+            KeyBoardInput();
         }
         else
         {
-            if(InputManager.Current.BtnLeft.IsSlected())
-            {
-
-               _horizontal = -1;
-            }
-            else if(InputManager.Current.BtnRight.IsSlected())
-            {
-                _horizontal = 1;
-            }
-            else
-            {
-                _horizontal = 0;
-            }
-            if (InputManager.Current.BtnJump.IsSlected() && isGrounded() && _canJump)
-            {
-                _rb.AddForce(Vector2.up * _force, ForceMode2D.Impulse);
-                _canJump = false;
-            }
+           MobileInput();
         }
-
+        // move 
         Move(_horizontal);
-
+        //flip
         if (_rb.velocity.x > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        else if(_rb.velocity.x < 0)
+        else if (_rb.velocity.x < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-
+        //set animation
         if (isGrounded())
         {
             if (_rb.velocity.x != 0)
@@ -113,8 +80,8 @@ public class PlayerController : MMSingleton<PlayerController>
                 _anim.SetState(State.Fall);
             }
         }
-
-        if(_rb.velocity.y < 0)
+        //check if can jump
+        if (_rb.velocity.y < 0)
         {
             _canJump = true;
             _hitBox.CanHit = true;
@@ -125,22 +92,65 @@ public class PlayerController : MMSingleton<PlayerController>
         }
     }
 
-    public void Move(float horizontal)
+    private void MobileInput()
+    {
+        if (InputManager.Current.BtnLeft.IsSlected())
+        {
+            _horizontal = -1;
+        }
+        else if (InputManager.Current.BtnRight.IsSlected())
+        {
+            _horizontal = 1;
+        }
+        else
+        {
+            _horizontal = 0;
+        }
+        if (InputManager.Current.BtnJump.IsSlected() && isGrounded() && _canJump)
+        {
+            _rb.AddForce(Vector2.up * _force, ForceMode2D.Impulse);
+            _canJump = false;
+        }
+    }
+
+    private void KeyBoardInput()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
+            _horizontal = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            _horizontal = 1;
+        }
+        else
+        {
+            _horizontal = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded() && _canJump)
+        {
+            _rb.AddForce(Vector2.up * _force, ForceMode2D.Impulse);
+            _canJump = false;
+        }
+    }
+
+    private void Move(float horizontal)
     {
         _horizontalCurrent = horizontal;
-        if(_horizontalCurrent != horizontal)
+        if (_horizontalCurrent != horizontal)
         {
             _horizontalTemp = 0;
         }
-        if(horizontal == 0)
+        if (horizontal == 0)
         {
             _horizontalTemp = 0;
         }
-        if(horizontal == 1 && _horizontalTemp <= 1)
+        if (horizontal == 1 && _horizontalTemp <= 1)
         {
-            _horizontalTemp += 0.05f;    
+            _horizontalTemp += 0.05f;
         }
-        else if(horizontal == -1 && _horizontalTemp >= -1)
+        else if (horizontal == -1 && _horizontalTemp >= -1)
         {
             _horizontalTemp -= 0.05f;
         }

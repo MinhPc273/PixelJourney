@@ -1,18 +1,16 @@
+using JunEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MMSingleton<GameManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject PlayerPivot;
+    [SerializeField] GameObject Level;
 
-    // Update is called once per frame
-    void Update()
+    public void PlayGame()
     {
-        
+        PlayerPivot.SetActive(true);
+        Level.SetActive(true);
     }
 }
