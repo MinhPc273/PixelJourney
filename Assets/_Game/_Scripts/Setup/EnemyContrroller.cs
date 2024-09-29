@@ -36,9 +36,9 @@ public class EnemyContrroller : MonoBehaviour
 
     private void Update()
     {
-        Vector2 point = _currentPoint - transform.position;
+        Vector2 point = new Vector3(_currentPoint.x, transform.position.y, transform.position.z) - transform.position;
 
-        if (point.magnitude < 0.5f)
+        if (point.magnitude < 0.1f)
         {
             if (_currentPoint == _pointLeft)
             {

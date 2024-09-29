@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Trap
+  - TAZOFX
   layers:
   - Default
   - TransparentFX
@@ -40,6 +42,9 @@ TagManager:
   m_SortingLayers:
   - name: BG
     uniqueID: 2871159871
+    locked: 0
+  - name: Font
+    uniqueID: 3568863947
     locked: 0
   - name: Default
     uniqueID: 0

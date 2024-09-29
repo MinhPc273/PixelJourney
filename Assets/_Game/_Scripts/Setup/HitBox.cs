@@ -16,20 +16,36 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Vector2 myPosition = transform.position;
-        Vector2 otherPosition = collision.transform.position;
-        Vector2 direction = myPosition - otherPosition;
-
-        if(CalculateAngleWithOY(direction) < 90f && _canHit)
+        //attack Enimies
+        if(collision.GetComponent<EnemyContrroller>() != null)
         {
-            _player.Rb.velocity = new Vector2(_player.Rb.velocity.x, 0);
-            _player.Rb.AddForce(Vector2.up * _player.Force * 0.5f, ForceMode2D.Impulse);
-            if(collision.TryGetComponent(out EnemyContrroller enemy))
+            Vector2 myPosition = transform.position;
+            Vector2 otherPosition = collision.transform.position;
+            Vector2 direction = myPosition - otherPosition;
+
+            if (CalculateAngleWithOY(direction) < 90f && _canHit)
             {
-                enemy.Dead();
+                _player.Rb.velocity = new Vector2(_player.Rb.velocity.x, 0);
+                _player.Rb.AddForce(Vector2.up * _player.Force * 0.5f, ForceMode2D.Impulse);
+                if (collision.TryGetComponent(out EnemyContrroller enemy))
+                {
+                    enemy.Dead();
+                }
+            }
+            else
+            {
+                _player.Rb.velocity = new Vector2(_player.Rb.velocity.x, 0);
+                _player.Rb.AddForce(Vector2.up * _player.Force * 0.75f, ForceMode2D.Impulse);
             }
         }
+
+        if(collision.tag == "Trap")
+        {
+            _player.Rb.velocity = new Vector2(_player.Rb.velocity.x, 0);
+            _player.Rb.AddForce(Vector2.up * _player.Force * 0.75f, ForceMode2D.Impulse);
+        }
     }
+
 
     float CalculateAngleWithOY(Vector2 vector)
     {
