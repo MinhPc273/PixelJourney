@@ -30,7 +30,16 @@ public class EnemyContrroller : MonoBehaviour
     {
         _pointLeft = transform.position + Vector3.left * _distance;
         _pointRight = transform.position + Vector3.right * _distance;
-        _currentPoint = _pointLeft;
+
+        if(_speed > 0)
+        {
+            _currentPoint = _pointLeft;
+        }
+        else
+        {
+           _currentPoint = _pointRight;
+        }
+        
         transform.position = _currentPoint;
     }
 
@@ -52,12 +61,12 @@ public class EnemyContrroller : MonoBehaviour
 
         if (_currentPoint == _pointLeft)
         {
-            _rb.velocity = new Vector2(-_speed, _rb.velocity.y);
+            _rb.velocity = new Vector2(-Mathf.Abs(_speed), _rb.velocity.y);
             transform.localScale = new Vector3(1, 1, 1);
         }
         else
         {
-            _rb.velocity = new Vector2(_speed, _rb.velocity.y);
+            _rb.velocity = new Vector2(Mathf.Abs(_speed), _rb.velocity.y);
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }

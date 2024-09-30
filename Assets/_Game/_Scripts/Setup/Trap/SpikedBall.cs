@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpikedBall : MonoBehaviour
 {
@@ -8,11 +6,14 @@ public class SpikedBall : MonoBehaviour
     [SerializeField] Transform _chainSpiked;
     [SerializeField] Transform _spikedBall;
 
+    [Range(0f, 200f)]
     [SerializeField] float _rotationSpeed = 1.0f;
     [Range(0f, 360f)]
     [SerializeField] float _angle = 50f;
 
     [SerializeField] float radius = 0.5f;
+
+    private bool isFoward = true;
 
     [Header("Loop")]
     [SerializeField] bool _isLoop;
@@ -27,8 +28,14 @@ public class SpikedBall : MonoBehaviour
     void Start()
     {
         SetUpHinge();
-        
-        _hinge.rotation = Quaternion.Euler(0, 0, -300);
+        if (_isLoop)
+        {
+            _timer = _startAngleLoop + 90;
+        }
+        else
+        {
+            _timer = -_angle / 2;
+        }
     }
 
 
@@ -69,8 +76,48 @@ public class SpikedBall : MonoBehaviour
 
     void Update()
     {
-        _timer += Time.deltaTime * _rotationSpeed;
-        //_hinge.rotation = Quaternion.Euler(0, 0, Mathf.Sin(_timer) * _angle / 2);
+        CaculateTimer();
+        _hinge.rotation = Quaternion.Euler(0, 0, _timer);
+    }
+
+    private void CaculateTimer()
+    {
+        if(_isLoop)
+        {
+            if (!_isClockwise)
+            {
+                _timer += Time.deltaTime * _rotationSpeed;
+                if (_timer >= 360 * 2)
+                {
+                    _timer = 0;
+                }
+            }
+            else
+            {
+                _timer -= Time.deltaTime * _rotationSpeed;
+                if (_timer <= -360 * 2)
+                {
+                    _timer = 0;
+                }
+            }
+            return;
+        }
+        if (isFoward)
+        {
+            _timer += Time.deltaTime * _rotationSpeed;
+            if (_timer >= _angle / 2)
+            {
+                isFoward = false;
+            }
+        }
+        else
+        {
+            _timer -= Time.deltaTime * _rotationSpeed;
+            if (_timer <= -_angle / 2)
+            {
+                isFoward = true;
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -94,12 +141,12 @@ public class SpikedBall : MonoBehaviour
 
     private void DrawArc(Vector3 center, float radius, float startAngle, float angleRange, int segmentCount = 20)
     {
-        float angleStep = angleRange / segmentCount; 
+        float angleStep = angleRange / segmentCount;
         Vector3 previousPoint = center + new Vector3(Mathf.Cos(Mathf.Deg2Rad * startAngle), Mathf.Sin(Mathf.Deg2Rad * startAngle)) * radius;
         Gizmos.DrawLine(transform.position, previousPoint);
         for (int i = 1; i <= segmentCount; i++)
         {
-            float angle = startAngle + angleStep * i; 
+            float angle = startAngle + angleStep * i;
             Vector3 currentPoint = center + new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle)) * radius; // Tính vị trí điểm hiện tại
 
             Gizmos.DrawLine(previousPoint, currentPoint);
