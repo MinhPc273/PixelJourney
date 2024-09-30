@@ -6,6 +6,7 @@ public class AnimState : MonoBehaviour
 {
     private State _state;
     [SerializeField] Animator _animator;
+    public State State { get => _state; }
 
     public void SetState(State newState)
     {
@@ -21,6 +22,7 @@ public enum State
     Run,
     Jump,
     Fall,
-    Dead
+    Dead,
+    Collect
 }
 

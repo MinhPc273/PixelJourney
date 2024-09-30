@@ -1,5 +1,8 @@
 ﻿using JunEngine;
+using System;
+using System.Collections;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MMSingleton<PlayerController>
 {
@@ -22,21 +25,57 @@ public class PlayerController : MMSingleton<PlayerController>
 
     public Rigidbody2D Rb => _rb;
 
-    private bool _canJump = false;
 
     private float _horizontal;
     private float _horizontalCurrent;
     private float _horizontalTemp;
+
+    private bool _canJump = true;
+    private bool _isInvincible = false;
+    private bool _isDead = false;
+
+    [Header("Stat")]
+    public int HpMAX = 3;
+    private int _hp = 3;
+
+    public int Hp => _hp;
+
+    private int _key = 0;
+    private int _maxKey = 3;
+    public int Key => _key;
+    public int MaxKey => _maxKey;
+
+    [SerializeField] GameObject _shield;
+
+    public Action OnTakeDame;
+    public Action OnTakeKey;
 
     protected override void Awake()
     {
         base.Awake();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<AnimState>();
+        GameManager.Current.OnInitGame += InitGame;
+    }
+
+    private void Start()
+    {
+        InitGame();
+    }
+
+    private void InitGame()
+    {
+        _key = 0;
+        _hp = HpMAX;
+        _isDead = false;
+        _canJump = true;
+        _isInvincible = false;
+        _shield.SetActive(false);
     }
 
     void Update()
     {
+        if (_isDead) return;
         //get input
         if (InputManager.Current._InputType == InputType.Keyboard)
         {
@@ -51,11 +90,13 @@ public class PlayerController : MMSingleton<PlayerController>
         //flip
         if (_rb.velocity.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            //transform.localScale = new Vector3(1, 1, 1);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else if (_rb.velocity.x < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            //transform.localScale = new Vector3(-1, 1, 1);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         //set animation
         if (isGrounded())
@@ -170,5 +211,75 @@ public class PlayerController : MMSingleton<PlayerController>
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + (Vector3.down * _castDistance), new Vector3(_boxSize.x, _boxSize.y, 0));
+    }
+
+    public void TakeDame()
+    {
+        if(_isInvincible || _isDead)
+        {
+            return;
+        }
+
+        _hp--;
+        if(_hp <= 0)
+        {
+            _hp = 0;
+            OnTakeDame?.Invoke();
+            StartCoroutine(Dead());
+            return;
+        }
+
+        Knock();
+        StartCoroutine(Shield());
+
+        OnTakeDame?.Invoke();
+    }
+
+    private IEnumerator Dead()
+    {
+        _rb.velocity = Vector3.zero;
+        _isDead = true;
+        _anim.SetState(State.Dead);
+        yield return new WaitForSeconds(1f);
+        GameManager.Current.Lose();
+    }
+
+    public void Knock()
+    {
+        _rb.velocity = new Vector2(_rb.velocity.x, 0);
+        _rb.AddForce(Vector2.up * _force * 0.75f, ForceMode2D.Impulse);
+    }
+
+    private IEnumerator Shield()
+    {
+        _isInvincible = true;
+        _shield.SetActive(true);
+        _shield.GetComponent<Animator>().SetTrigger("Enter");
+        yield return new WaitForSeconds(1.5f);
+        _shield.GetComponent<Animator>().SetTrigger("Exit");
+        yield return new WaitForSeconds(0.5f);
+        _isInvincible = false;
+        _shield.SetActive(false);
+    }
+
+    public void TakeKey()
+    {
+        _key++;
+        OnTakeKey?.Invoke();
+    }
+
+    public void CheckFinish(Action done)
+    {
+        if(_key == _maxKey)
+        {
+            StartCoroutine(Finish());
+            done?.Invoke();
+        }
+    }
+
+    private IEnumerator Finish()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.Current.Win();
     }
 }

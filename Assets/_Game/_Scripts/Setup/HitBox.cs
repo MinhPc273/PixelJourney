@@ -22,6 +22,7 @@ public class HitBox : MonoBehaviour
             Vector2 myPosition = transform.position;
             Vector2 otherPosition = collision.transform.position;
             Vector2 direction = myPosition - otherPosition;
+            //Debug.Log(CalculateAngleWithOY(direction));
 
             if (CalculateAngleWithOY(direction) < 90f && _canHit)
             {
@@ -34,15 +35,31 @@ public class HitBox : MonoBehaviour
             }
             else
             {
-                _player.Rb.velocity = new Vector2(_player.Rb.velocity.x, 0);
-                _player.Rb.AddForce(Vector2.up * _player.Force * 0.75f, ForceMode2D.Impulse);
+                _player.TakeDame();
             }
         }
 
         if(collision.tag == "Trap")
         {
-            _player.Rb.velocity = new Vector2(_player.Rb.velocity.x, 0);
-            _player.Rb.AddForce(Vector2.up * _player.Force * 0.75f, ForceMode2D.Impulse);
+            _player.TakeDame();
+        }
+
+        if(collision.tag == "Collectable")
+        {
+            collision.GetComponent<Fruit>().Collect();
+        }
+
+        if(collision.tag == "Key")
+        {
+            collision.GetComponent<Key>().Collect();
+        }
+
+        if(collision.tag == "Finish")
+        {
+            _player.CheckFinish(() =>
+            {
+                collision.GetComponentInChildren<Animator>().SetTrigger("End");
+            });
         }
     }
 
