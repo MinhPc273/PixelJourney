@@ -26,7 +26,7 @@ public class AudioSystem : MMSingleton<AudioSystem>
 
     public void ButtonSound()
     {
-        _isPlay = !_isPlay;
+        _isPlay = !_isPlay; // luu gia tri 
         BGM.mute = _isPlay;
     }
 }
