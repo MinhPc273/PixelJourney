@@ -49,17 +49,18 @@ public class PlayerController : MMSingleton<PlayerController>
 
     public Action OnTakeDame;
     public Action OnTakeKey;
+    public Action OnTakeFruit;
 
     protected override void Awake()
     {
         base.Awake();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<AnimState>();
-        GameManager.Current.OnInitGame += InitGame;
     }
 
     private void Start()
     {
+        GameManager.Current.OnInitGame += InitGame;
         InitGame();
     }
 

@@ -47,6 +47,8 @@ public class HitBox : MonoBehaviour
         if(collision.tag == "Collectable")
         {
             collision.GetComponent<Fruit>().Collect();
+            Pref.Fruit++;
+            _player.OnTakeFruit?.Invoke();
         }
 
         if(collision.tag == "Key")

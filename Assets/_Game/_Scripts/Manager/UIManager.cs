@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public GameObject MainMenu;
-    //public GameObject MainMenuBg;
+    public GameObject ChooseLevel;
     public GameObject GamePlay;
     public GameObject Shop;
     public GameObject Pause;
@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         MainMenu.SetActive(true);
-        //MainMenuBg.SetActive(true);
         GamePlay.SetActive(false);
         Shop.SetActive(false);
         Pause.SetActive(false);
@@ -23,22 +22,17 @@ public class UIManager : MonoBehaviour
         Lose.SetActive(false);
     }
 
-    private void OnEnable()
+    private void Start()
     {
         GameManager.Current.OnInitGame += PlayGame;
         GameManager.Current.OnWin += WinGame;
         GameManager.Current.OnLose += LoseGame;
     }
 
-
-    public void ButtonPlay()
-    {
-        GameManager.Current.PlayGame();
-    }
-
     public void PlayGame()
     {
         MainMenu.SetActive(false);
+        ChooseLevel.SetActive(false);
         GamePlay.SetActive(true);
         Lose.SetActive(false);
         Win.SetActive(false);

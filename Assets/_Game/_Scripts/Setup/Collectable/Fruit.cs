@@ -16,12 +16,6 @@ public class Fruit : MonoBehaviour
     {
         if(_animState.State == State.Collect) return;
         _animState.SetState(State.Collect);
-        StartCoroutine(Disappear());
-    }
-
-    IEnumerator Disappear()
-    {
-        yield return new WaitForSeconds(1f);
-        this.gameObject.SetActive(false);
+        Destroy(this.gameObject, 1f);
     }
 }

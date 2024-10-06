@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e99310dec030644f9c0d53cd1d7318b, type: 3}
+  m_Name: PlayerSkin
+  m_EditorClassIdentifier: 
+  skins:
+  - ID: 0
+    Name: Pink Man
+    Avatar: {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
+    Animator: {fileID: 9100000, guid: 1c8cbff2a71bc0b468b4337580af708e, type: 2}
+    Price: 0
+    _isBought: 1
+  - ID: 1
+    Name: Mask Dude
+    Avatar: {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
+    Animator: {fileID: 9100000, guid: 1c8cbff2a71bc0b468b4337580af708e, type: 2}
+    Price: 10
+    _isBought: 0
