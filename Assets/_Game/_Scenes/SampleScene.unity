@@ -26611,6 +26611,7 @@ MonoBehaviour:
   _txtHp: {fileID: 969407641}
   _txtKey: {fileID: 1285042840}
   _txtFruit: {fileID: 80664110}
+  _avatar: {fileID: 1253068645}
 --- !u!1 &1933896831
 GameObject:
   m_ObjectHideFlags: 0
