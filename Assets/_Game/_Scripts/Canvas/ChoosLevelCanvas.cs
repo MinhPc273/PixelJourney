@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,49 +16,45 @@ public class ChoosLevelCanvas : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.Levels.Length; i++)
         {
-            if (_listBtnLevel.Count != 0 && i < _listBtnLevel.Count)
+            if (i >= _listBtnLevel.Count)
             {
-                if (i <= Pref.LevelUnlocked)
+                BtnLevel btnLevel = Instantiate(_btnLevelPrefab, _content);
+                btnLevel.name = _btnLevelPrefab.name + i;
+                _listBtnLevel.Add(btnLevel);
+            }
+
+            _listBtnLevel[i].gameObject.SetActive(true);
+        }
+
+
+        int index = 0;
+        foreach (var item in _listBtnLevel)
+        {
+            if (index <= Pref.LevelUnlocked)
+            {
+                item.SetLevel(index + 1);
+
+                int levelIndex = index;
+
+                item.OnClick = () =>
                 {
-                    _listBtnLevel[i].SetLevel(i + 1);
-                    _listBtnLevel[i].OnClick = () =>
-                    {
-                        GameManager.Instance.LoadLevel(i-1);
-                        GameManager.Instance.PlayGame();
-                        
-                    };
-                }
-                else
-                {
-                    _listBtnLevel[i].Lock();
-                }
-                _listBtnLevel[i].gameObject.SetActive(true);
+                    GameManager.Instance.LoadLevel(levelIndex);
+                    GameManager.Instance.PlayGame();
+                };
             }
             else
             {
-                BtnLevel btnLevel = Instantiate(_btnLevelPrefab, _content);
-                btnLevel.name = _btnLevelPrefab.name + "_" + (i+1);
-                _listBtnLevel.Add(btnLevel);
-                if (i <= Pref.LevelUnlocked)
-                {
-                    _listBtnLevel[i].SetLevel(i+1);
-                    _listBtnLevel[i].OnClick = () =>
-                    {
-                        GameManager.Instance.LoadLevel(i-1);
-                        GameManager.Instance.PlayGame();
-                    };
-                }
-                else
-                {
-                    _listBtnLevel[i].Lock();
-                }
-                _listBtnLevel[i].gameObject.SetActive(true);
+                item.Lock();
             }
+            index++;
         }
+    }
 
+    private void Start()
+    {
         BtnLevel btnLevelComming = Instantiate(_btnLevelPrefab, _content);
-        _listBtnLevel.Add(btnLevelComming);
         btnLevelComming.name = _btnLevelPrefab.name + "Coming";
         btnLevelComming.ComingSoon();
+        btnLevelComming.transform.SetAsLastSibling();
     }
 }

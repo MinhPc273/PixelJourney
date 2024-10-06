@@ -16,8 +16,15 @@ public class BtnSkin : MonoBehaviour
     [SerializeField] GameObject _btnUse;
     [SerializeField] GameObject _btnSelect;
 
+    public Action OnBuySuccess;
+    public Action OnBuyFall;
+    public Action OnUse;
+
+    private Skin _skin;
+
     public void SetData(Skin skin)
     {
+        _skin = skin;
         _id = skin.ID;
         _txtName.text = skin.Name;
         _avatar.sprite = skin.Avatar;
@@ -43,12 +50,12 @@ public class BtnSkin : MonoBehaviour
     }
 
 
-    public void OnClickUse(Action action)
+    public void ButtonUse()
     {
         SkinManager.Instance.SetSkin(_id);
         _btnUse.SetActive(false);
         _btnSelect.SetActive(true);
-        action?.Invoke();
+        OnUse?.Invoke();
     }
 
     public void UnSlected()
@@ -57,23 +64,19 @@ public class BtnSkin : MonoBehaviour
         _btnUse.SetActive(true);
     }
 
-    public void OnClickBuy(Action success, Action fall)
+    public void ButtonBuy()
     {
         if(Pref.Fruit >= int.Parse(_txtPrice.text))
         {
             Pref.Fruit -= int.Parse(_txtPrice.text);
             _txtPrice.gameObject.SetActive(false);
             _btnUse.SetActive(true);
-            success?.Invoke();
+            _skin.IsBought = true;
+            OnBuySuccess?.Invoke();
         }
         else
         {
-            fall?.Invoke();
+            OnBuyFall?.Invoke();
         }
-    }
-
-    public void ButtonBuy()
-    {
-        
     }
 }

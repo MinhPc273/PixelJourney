@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -14,12 +12,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        MainMenu.SetActive(true);
-        GamePlay.SetActive(false);
-        Shop.SetActive(false);
-        Pause.SetActive(false);
-        Win.SetActive(false);
-        Lose.SetActive(false);
+        ButtonMainMenu();
     }
 
     private void Start()
@@ -40,11 +33,22 @@ public class UIManager : MonoBehaviour
 
     public void LoseGame()
     {
-       Lose.SetActive(true);
+        Lose.SetActive(true);
     }
 
     public void WinGame()
     {
         Win.SetActive(true);
+    }
+
+    public void ButtonMainMenu()
+    {
+        MainMenu.SetActive(true);
+        ChooseLevel.SetActive(false);
+        GamePlay.SetActive(false);
+        Shop.SetActive(false);
+        Pause.SetActive(false);
+        Win.SetActive(false);
+        Lose.SetActive(false);
     }
 }

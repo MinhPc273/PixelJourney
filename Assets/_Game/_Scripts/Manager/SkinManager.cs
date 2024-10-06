@@ -14,12 +14,14 @@ public class SkinManager : MMSingleton<SkinManager>
     override protected void Awake()
     {
         base.Awake();
+        _playerModel.runtimeAnimatorController = PlayerSkinData.skins[Pref.IDSkin].Animator;
     }
 
     public void SetSkin(int id)
     {
         if(id == Pref.IDSkin)
             return;
+        Pref.IDSkin = id;
         _playerModel.runtimeAnimatorController = PlayerSkinData.skins[id].Animator;
     }
 }

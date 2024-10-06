@@ -16,7 +16,7 @@ public class Skin
     public int ID;
     public string Name;
     public Sprite Avatar;
-    public AnimatorController Animator;
+    public AnimatorOverrideController Animator;
     public int Price;
     [SerializeField] bool _isBought;
     public bool IsBought

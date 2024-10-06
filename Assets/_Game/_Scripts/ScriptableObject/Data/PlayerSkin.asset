@@ -16,12 +16,24 @@ MonoBehaviour:
   - ID: 0
     Name: Pink Man
     Avatar: {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
-    Animator: {fileID: 9100000, guid: 1c8cbff2a71bc0b468b4337580af708e, type: 2}
+    Animator: {fileID: 22100000, guid: 7179879971497194abfa07e7437f8dce, type: 2}
     Price: 0
     _isBought: 1
   - ID: 1
     Name: Mask Dude
     Avatar: {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
-    Animator: {fileID: 9100000, guid: 1c8cbff2a71bc0b468b4337580af708e, type: 2}
+    Animator: {fileID: 22100000, guid: 558b408022b82c2439067f39ed1e3edb, type: 2}
     Price: 10
+    _isBought: 0
+  - ID: 2
+    Name: Ninja Frog
+    Avatar: {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
+    Animator: {fileID: 22100000, guid: 4abc1f4da24d83243be84f6ad4c8be8e, type: 2}
+    Price: 15
+    _isBought: 0
+  - ID: 3
+    Name: Virtual Guy
+    Avatar: {fileID: -6367560908665664636, guid: 40de9a8703e2e5a47882b0b86451c741, type: 3}
+    Animator: {fileID: 22100000, guid: 4a31f08e903275a46ab889dfab853285, type: 2}
+    Price: 20
     _isBought: 0

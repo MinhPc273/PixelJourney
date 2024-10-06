@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,7 +20,8 @@ public class ShopCanvas : MonoBehaviour
     private void OnEnable()
     {
         Message.SetActive(false);
-        if(_playerSkin == null)
+
+        if (_playerSkin == null)
         {
             _playerSkin = SkinManager.Instance.PlayerSkinData;
         }
@@ -33,35 +33,45 @@ public class ShopCanvas : MonoBehaviour
             btnSkin.gameObject.SetActive(false);
         }
 
-        for(int i = 0; i < _playerSkin.skins.Count; i++)
+        for (int i = 0; i < _playerSkin.skins.Count; i++)
         {
-            if(i >= _listBtnSkin.Count)
+            if (i >= _listBtnSkin.Count)
             {
                 var btnSkin = Instantiate(_btnSkinPrefab, _btnSkinParent);
-                btnSkin.name = _btnSkinPrefab.name;
+                btnSkin.name = _btnSkinPrefab.name + i;
                 _listBtnSkin.Add(btnSkin);
             }
 
             _listBtnSkin[i].SetData(_playerSkin.skins[i]);
             _listBtnSkin[i].gameObject.SetActive(true);
+        }
 
-/*            _listBtnSkin[i].OnClickUse(() =>
+        foreach(var btnSkin in _listBtnSkin)
+        {
+            if(btnSkin.ID == Pref.IDSkin)
             {
-                if(_currentButton != null)
+                _currentButton = btnSkin;
+            }
+
+            btnSkin.OnUse = () =>
+            {
+                if (_currentButton != null)
                 {
                     _currentButton.UnSlected();
                 }
-                _currentButton = _listBtnSkin[i];
-            });*/
 
-/*
-            _listBtnSkin[i].OnClickBuy(() =>
+                _currentButton = btnSkin;
+            };
+
+            btnSkin.OnBuySuccess = () =>
             {
                 UpdateApple();
-            }, () =>
+            };
+
+            btnSkin.OnBuyFall = () =>
             {
                 Message.SetActive(true);
-            });*/
+            };
         }
     }
 

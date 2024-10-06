@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GamePlayCanvas : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _txtHp;
     [SerializeField] TextMeshProUGUI _txtKey;
     [SerializeField] TextMeshProUGUI _txtFruit;
+    [SerializeField] Image _avatar;
 
     private void OnEnable()
     {
@@ -23,11 +25,12 @@ public class GamePlayCanvas : MonoBehaviour
         PlayerController.Current.OnTakeFruit -= UpdateFruit;
     }
 
-    private void Start()
+    public void Init()
     {
+        _avatar.sprite = SkinManager.Instance.PlayerSkinData.skins[Pref.IDSkin].Avatar;
+        UpdateFruit();
         UpdateHP();
         UpdateKey();
-        UpdateFruit();
     }
 
     public void UpdateFruit()

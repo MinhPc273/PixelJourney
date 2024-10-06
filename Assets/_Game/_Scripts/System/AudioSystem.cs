@@ -2,6 +2,7 @@ using JunEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioSystem : MMSingleton<AudioSystem>
 {
@@ -17,16 +18,28 @@ public class AudioSystem : MMSingleton<AudioSystem>
         }
     }
 
-    public AudioSource BGM;
+    public AudioMixerGroup Master;
 
     private void Start()
     {
-        BGM.mute = _isPlay;
+        SetVolume();
     }
 
     public void ButtonSound()
     {
-        _isPlay = !_isPlay; // luu gia tri 
-        BGM.mute = _isPlay;
+        _isPlay = !_isPlay; 
+        SetVolume();
+    }
+
+    public void SetVolume()
+    {
+        if (!_isPlay)
+        {
+            Master.audioMixer.SetFloat("Master", 0);
+        }
+        else
+        {
+            Master.audioMixer.SetFloat("Master", -80);
+        }
     }
 }

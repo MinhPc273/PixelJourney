@@ -51,6 +51,8 @@ public class PlayerController : MMSingleton<PlayerController>
     public Action OnTakeKey;
     public Action OnTakeFruit;
 
+    public GamePlayCanvas GamePlayCanvas;
+
     protected override void Awake()
     {
         base.Awake();
@@ -72,6 +74,7 @@ public class PlayerController : MMSingleton<PlayerController>
         _canJump = true;
         _isInvincible = false;
         _shield.SetActive(false);
+        GamePlayCanvas.Init();
     }
 
     void Update()

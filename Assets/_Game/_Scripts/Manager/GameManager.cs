@@ -27,6 +27,8 @@ public class GameManager : MMSingleton<GameManager>
     public Action OnWin;
     public Action OnLose;
 
+    [SerializeField] CanvasWin _canvasWin;
+
     override protected void Awake()
     {
         base.Awake();
@@ -41,7 +43,6 @@ public class GameManager : MMSingleton<GameManager>
 
     public void PlayGame()
     {
-        //LoadLevel(_currentLevelIndex);
         Confiner.m_BoundingShape2D = _currentLevel.Bound.GetComponent<PolygonCollider2D>();
         PlayerPivot.transform.position = _levels[_currentLevelIndex].StartPos.position;
         PlayerPivot.SetActive(true);
@@ -52,6 +53,7 @@ public class GameManager : MMSingleton<GameManager>
     {
         if(_currentLevel != null) 
             Destroy(_currentLevel.gameObject);
+        _currentLevelIndex = level;
         _currentLevel = Instantiate(_levels[level], _levelParent);
     }
 
@@ -62,6 +64,28 @@ public class GameManager : MMSingleton<GameManager>
 
     public void Win()
     {
+        _currentLevelIndex++;
+        if(_currentLevelIndex >= _levels.Length)
+        {
+            _canvasWin.ButtonNext.SetActive(false);
+        }
+        if(_currentLevelIndex > Pref.LevelUnlocked)
+        {
+            Pref.LevelUnlocked = _currentLevelIndex;
+        }
         OnWin?.Invoke();
+    }
+
+    public void OnMainMenu()
+    {
+        PlayerPivot.SetActive(false);
+        if(_currentLevel != null)
+            Destroy(_currentLevel.gameObject);
+    }
+
+    public void NewGame()
+    {
+        LoadLevel(_currentLevelIndex);
+        PlayGame();
     }
 }
