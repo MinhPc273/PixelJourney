@@ -19266,7 +19266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0a76e0ac573754a8ba37983a0f793e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _InputType: 0
+  _InputType: 1
   BtnLeft: {fileID: 1235735030}
   BtnRight: {fileID: 1265955144}
   BtnJump: {fileID: 1609567680}

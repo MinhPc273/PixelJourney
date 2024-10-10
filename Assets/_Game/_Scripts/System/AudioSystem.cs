@@ -33,7 +33,7 @@ public class AudioSystem : MMSingleton<AudioSystem>
 
     public void SetVolume()
     {
-        if (!_isPlay)
+        if (_isPlay)
         {
             Master.audioMixer.SetFloat("Master", 0);
         }

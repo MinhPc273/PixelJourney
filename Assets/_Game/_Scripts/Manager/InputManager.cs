@@ -1,8 +1,4 @@
 using JunEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class InputManager : MMSingleton<InputManager>
 {
@@ -10,8 +6,17 @@ public class InputManager : MMSingleton<InputManager>
     public ButonControl BtnLeft;
     public ButonControl BtnRight;
     public BtnJump BtnJump;
-}
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _InputType = InputType.Mobile;
+
+#if UNITY_EDITOR
+        _InputType = InputType.Keyboard;
+#endif
+    }
+}
 public enum InputType
 {
     Keyboard,

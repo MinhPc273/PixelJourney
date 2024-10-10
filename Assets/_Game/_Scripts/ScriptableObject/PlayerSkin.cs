@@ -1,7 +1,6 @@
 using JunEngine;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerSkin", menuName = "ScriptableObjects/Player", order = 1)]

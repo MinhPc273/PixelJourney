@@ -31,6 +31,7 @@ public class GameManager : MMSingleton<GameManager>
 
     override protected void Awake()
     {
+        Application.targetFrameRate = 144;
         base.Awake();
         Init();
         PlayerPivot.SetActive(false);
