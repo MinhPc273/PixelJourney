@@ -51,4 +51,9 @@ public class UIManager : MonoBehaviour
         Win.SetActive(false);
         Lose.SetActive(false);
     }
+
+    public void ButtonQuit()
+    {
+        Application.Quit();
+    }
 }
