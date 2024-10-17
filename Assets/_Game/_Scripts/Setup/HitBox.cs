@@ -39,16 +39,12 @@ public class HitBox : MonoBehaviour
             }
         }
 
-        if(collision.tag == "Trap")
-        {
-            _player.TakeDame();
-        }
-
         if(collision.tag == "Collectable")
         {
             collision.GetComponent<Fruit>().Collect();
-            Pref.Fruit++;
-            _player.OnTakeFruit?.Invoke();
+            
+            //Pref.Fruit++;
+            //_player.OnTakeFruit?.Invoke();
         }
 
         if(collision.tag == "Key")
@@ -56,7 +52,16 @@ public class HitBox : MonoBehaviour
             collision.GetComponent<Key>().Collect();
         }
 
-        if(collision.tag == "Finish")
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Trap")
+        {
+            _player.TakeDame();
+        }
+
+        if (collision.tag == "Finish")
         {
             _player.CheckFinish(() =>
             {

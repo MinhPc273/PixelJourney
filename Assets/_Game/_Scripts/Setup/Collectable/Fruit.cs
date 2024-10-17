@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Fruit : MonoBehaviour
@@ -15,6 +13,7 @@ public class Fruit : MonoBehaviour
     public void Collect()
     {
         if(_animState.State == State.Collect) return;
+        PlayerController.Current.CollectFruit();
         _animState.SetState(State.Collect);
         Destroy(this.gameObject, 1f);
     }

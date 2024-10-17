@@ -69,7 +69,9 @@ public class GameManager : MMSingleton<GameManager>
         if(_currentLevelIndex >= _levels.Length)
         {
             _canvasWin.ButtonNext.SetActive(false);
+            _canvasWin.ButtonCommingSoon.SetActive(true);
         }
+        _canvasWin.TxtFruit.text = $"+ {PlayerController.Current.Fruit.ToString()}";
         if(_currentLevelIndex > Pref.LevelUnlocked)
         {
             Pref.LevelUnlocked = _currentLevelIndex;

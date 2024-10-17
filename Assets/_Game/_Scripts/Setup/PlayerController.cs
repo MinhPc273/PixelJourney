@@ -41,6 +41,10 @@ public class PlayerController : MMSingleton<PlayerController>
 
     private int _key = 0;
     private int _maxKey = 3;
+
+    private int _fruit = 0;
+
+    public int Fruit => _fruit;
     public int Key => _key;
     public int MaxKey => _maxKey;
 
@@ -51,6 +55,8 @@ public class PlayerController : MMSingleton<PlayerController>
     public Action OnTakeFruit;
 
     public GamePlayCanvas GamePlayCanvas;
+
+    public GameObject MessKey;
 
     protected override void Awake()
     {
@@ -67,6 +73,8 @@ public class PlayerController : MMSingleton<PlayerController>
 
     private void InitGame()
     {
+        MessKey.SetActive(false);
+        _fruit = 0;
         _key = 0;
         _hp = HpMAX;
         _isDead = false;
@@ -95,11 +103,13 @@ public class PlayerController : MMSingleton<PlayerController>
         {
             //transform.localScale = new Vector3(1, 1, 1);
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            MessKey.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
         else if (_rb.velocity.x < 0)
         {
             //transform.localScale = new Vector3(-1, 1, 1);
             transform.rotation = Quaternion.Euler(0, 180, 0);
+            MessKey.transform.localRotation = Quaternion.Euler(0, 180, 0);
         }
         //set animation
         if (isGrounded())
@@ -216,6 +226,12 @@ public class PlayerController : MMSingleton<PlayerController>
         Gizmos.DrawWireCube(transform.position + (Vector3.down * _castDistance), new Vector3(_boxSize.x, _boxSize.y, 0));
     }
 
+    public void CollectFruit()
+    {
+        _fruit++;
+        OnTakeFruit?.Invoke();
+    }
+
     public void TakeDame()
     {
         if(_isInvincible || _isDead)
@@ -278,11 +294,16 @@ public class PlayerController : MMSingleton<PlayerController>
             StartCoroutine(Finish());
             done?.Invoke();
         }
+        else
+        {
+            MessKey.SetActive(true);
+        }
     }
 
     private IEnumerator Finish()
     {
         yield return new WaitForSeconds(1f);
         GameManager.Current.Win();
+        Pref.Fruit += _fruit;
     }
 }

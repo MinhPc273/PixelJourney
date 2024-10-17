@@ -35,7 +35,8 @@ public class GamePlayCanvas : MonoBehaviour
 
     public void UpdateFruit()
     {
-        _txtFruit.text = PlayerPrefs.GetInt(KeyPref.FRUIT).ToString();
+        //_txtFruit.text = PlayerPrefs.GetInt(KeyPref.FRUIT).ToString();
+        _txtFruit.text = PlayerController.Current.Fruit.ToString();
     }
 
     private void UpdateHP()
