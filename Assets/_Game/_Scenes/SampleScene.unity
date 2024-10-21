@@ -922,7 +922,7 @@ GameObject:
   - component: {fileID: 55414223}
   - component: {fileID: 55414222}
   m_Layer: 5
-  m_Name: btnCommingSoon
+  m_Name: btnComingSoon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5728,6 +5728,7 @@ GameObject:
   - component: {fileID: 389131229}
   - component: {fileID: 389131228}
   - component: {fileID: 389131227}
+  - component: {fileID: 389131230}
   m_Layer: 0
   m_Name: Pause
   m_TagString: Untagged
@@ -5820,6 +5821,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 99
   m_TargetDisplay: 0
+--- !u!114 &389131230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389131225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2acb6e8a8ed7174a93021142e8593fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &403833566
 GameObject:
   m_ObjectHideFlags: 0
@@ -27201,7 +27214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Comming Soon
+  m_text: Coming Soon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be36a21e51155544fa9b6cc4901f658c, type: 2}
   m_sharedMaterial: {fileID: -2247589966380513115, guid: be36a21e51155544fa9b6cc4901f658c, type: 2}

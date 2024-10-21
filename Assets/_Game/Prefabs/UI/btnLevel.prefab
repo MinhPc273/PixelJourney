@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 7191348294174179427}
   - component: {fileID: 3174335561988650704}
   m_Layer: 5
-  m_Name: txtConming
+  m_Name: txtComing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Comming \nsoon"
+  m_text: "Comming \nSoon"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be36a21e51155544fa9b6cc4901f658c, type: 2}
   m_sharedMaterial: {fileID: -2247589966380513115, guid: be36a21e51155544fa9b6cc4901f658c, type: 2}

@@ -58,6 +58,8 @@ public class PlayerController : MMSingleton<PlayerController>
 
     public GameObject MessKey;
 
+    private bool _isWin;
+
     protected override void Awake()
     {
         base.Awake();
@@ -82,6 +84,7 @@ public class PlayerController : MMSingleton<PlayerController>
         _isInvincible = false;
         _shield.SetActive(false);
         GamePlayCanvas.Init();
+        _isWin = false;
     }
 
     void Update()
@@ -291,6 +294,8 @@ public class PlayerController : MMSingleton<PlayerController>
     {
         if(_key == _maxKey)
         {
+            if(_isWin) return;
+            _isWin = true;
             StartCoroutine(Finish());
             done?.Invoke();
         }
